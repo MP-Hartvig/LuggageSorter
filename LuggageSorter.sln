@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32228.430
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LuggageSorter", "LuggageSorter\LuggageSorter.csproj", "{51D96B4E-3641-4D50-A7E4-64DE5D878FDD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{51D96B4E-3641-4D50-A7E4-64DE5D878FDD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{51D96B4E-3641-4D50-A7E4-64DE5D878FDD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{51D96B4E-3641-4D50-A7E4-64DE5D878FDD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{51D96B4E-3641-4D50-A7E4-64DE5D878FDD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5426F189-81E1-4AFE-AA04-D96F689CF041}
+	EndGlobalSection
+EndGlobal
