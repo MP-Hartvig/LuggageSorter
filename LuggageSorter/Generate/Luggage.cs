@@ -19,31 +19,25 @@ namespace LuggageSorter
             AssociatedTicket = ticket;
         }
 
-        int maxAmount = 0;
-
-        public void AddLuggageToQueue(Queue<Luggage> luggageQueue, Luggage luggage)
+        public void AddLuggageToQueue(Queue<Luggage> luggageQueue, Luggage[] luggage)
         {
-            while (maxAmount < 100)
+            if (Monitor.TryEnter(luggageQueue))
             {
-                if (Monitor.TryEnter(luggageQueue))
+                for (int i = 0; i < luggage.Length; i++)
                 {
                     try
                     {
-                        luggageQueue.Enqueue(luggage);
-                        maxAmount++;
+                        luggageQueue.Enqueue(luggage[i]);
                         Debug.WriteLine("Added luggage to queue");
                     }
                     catch (Exception ex)
                     {
                         Debug.WriteLine(ex);
                     }
-                    finally
-                    {
-                        Monitor.Pulse(luggageQueue);
-                        Monitor.Exit(luggageQueue);
-                    }
                 }
-                Thread.Sleep(100);
+                Monitor.PulseAll(luggageQueue);
+                Monitor.Exit(luggageQueue);
+                Thread.Sleep(100 / 15);
             }
         }
     }

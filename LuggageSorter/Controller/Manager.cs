@@ -14,7 +14,7 @@ namespace LuggageSorter
         {
         }
 
-        int id = 0;
+        int id = 1;
 
         Thread produce;
         Thread sorter;
@@ -26,8 +26,6 @@ namespace LuggageSorter
         Desk deskInfo = new Desk(1, true, DateTime.Now.ToLocalTime());
         Desk deskInfo2 = new Desk(2, true, DateTime.Now.ToLocalTime());
         Desk deskInfo3 = new Desk(3, true, DateTime.Now.ToLocalTime());
-
-        
 
         public void Initializer()
         {
@@ -54,35 +52,47 @@ namespace LuggageSorter
 
         private void ProduceLuggage()
         {
-            while (id < 100)
+            Random rand = new Random();            
+
+            while (true)
             {
-                Ticket randomTicket = new Ticket(id);
+                int selector = rand.Next(1, 4);
 
-                //Luggage[] amountOfLuggage = new Luggage[3];
+                Ticket randomTicket = new Ticket(id); // New tickets are generated but destination stays the same
 
-                //for (int i = 0; i <= randomTicket.AmountOfLuggage; i++)
-                //{
-                //    amountOfLuggage[i] = new Luggage(id, randomTicket);
-                //}
+                int arraySize = randomTicket.AmountOfLuggage;
 
-                Luggage luggage = new Luggage(id, randomTicket);
+                Luggage[] amountOfLuggage = new Luggage[arraySize];
 
-                if (id < 33) // Needs another condition
+                if (arraySize > 1)
                 {
-                    luggage.AddLuggageToQueue(deskInfo.LuggageQueue, luggage);
-                    Debug.WriteLine("Luggage was added to desk1");
-                }
-                else if (id > 66) // Needs another condition
-                {
-                    luggage.AddLuggageToQueue(deskInfo2.LuggageQueue, luggage);
-                    Debug.WriteLine("Luggage was added to desk3");
+                    for (int i = 0; i < arraySize; i++)
+                    {
+                        amountOfLuggage[i] = new Luggage(id, randomTicket);
+                    }
                 }
                 else
                 {
-                    luggage.AddLuggageToQueue(deskInfo3.LuggageQueue, luggage);
+                    amountOfLuggage[0] = new Luggage(id, randomTicket);
+                }
+
+                if (selector == 1) // Needs another condition
+                {
+                    amountOfLuggage[0].AddLuggageToQueue(deskInfo.LuggageQueue, amountOfLuggage);
+                    Debug.WriteLine("Luggage was added to desk1");
+                }
+                else if (selector == 2) // Needs another condition
+                {
+                    amountOfLuggage[0].AddLuggageToQueue(deskInfo2.LuggageQueue, amountOfLuggage);
                     Debug.WriteLine("Luggage was added to desk2");
                 }
+                else
+                {
+                    amountOfLuggage[0].AddLuggageToQueue(deskInfo3.LuggageQueue, amountOfLuggage);
+                    Debug.WriteLine("Luggage was added to desk3");
+                }
                 id++;
+                Thread.Sleep(100 / 15);
             }
         }
 
@@ -94,19 +104,19 @@ namespace LuggageSorter
 
             while (true)
             {
-                if (deskInfo.LuggageQueue.Count > 5)
+                if (deskInfo.LuggageQueue.Count > 0)
                 {
                     sortDesk1.SortByDestination();
                     Debug.WriteLine("Queue was sent from disk1 to sorter");
                 }
 
-                if (deskInfo2.LuggageQueue.Count > 5)
+                if (deskInfo2.LuggageQueue.Count > 0)
                 {
                     sortDesk2.SortByDestination();
                     Debug.WriteLine("Queue was sent from disk2 to sorter");
                 }
 
-                if (deskInfo3.LuggageQueue.Count > 5)
+                if (deskInfo3.LuggageQueue.Count > 0)
                 {
                     sortDesk3.SortByDestination();
                     Debug.WriteLine("Queue was sent from disk3 to sorter");

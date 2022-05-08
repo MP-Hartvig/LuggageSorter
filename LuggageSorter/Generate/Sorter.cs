@@ -121,28 +121,35 @@ namespace LuggageSorter
                         DequeueLuggage();
                     }
                 }
-                Thread.Sleep(150);
+                Thread.Sleep(100 / 15);
             }
         }
 
         public void DequeueLuggage()
         {
-            Monitor.TryEnter(LuggageQueue);
-
-            try
+            if (Monitor.TryEnter(LuggageQueue))
             {
-                LuggageQueue.Dequeue();
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex);
-            }
-            finally
-            {
-                if (Monitor.IsEntered(LuggageQueue))
+                if (LuggageQueue.Count == 0)
                 {
-                    Monitor.PulseAll(LuggageQueue);
-                    Monitor.Exit(LuggageQueue);
+                    Monitor.Wait(LuggageQueue);
+                    Debug.WriteLine("Waiting for luggageQueue");
+                }
+
+                try
+                {
+                    LuggageQueue.Dequeue();
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex);
+                }
+                finally
+                {
+                    if (Monitor.IsEntered(LuggageQueue))
+                    {
+                        Monitor.PulseAll(LuggageQueue);
+                        Monitor.Exit(LuggageQueue);
+                    }
                 }
             }
         }
