@@ -14,8 +14,6 @@ namespace LuggageSorter
         {
         }
 
-        int id = 1;
-
         Thread produce;
         Thread sorter;
 
@@ -29,8 +27,8 @@ namespace LuggageSorter
 
         public void Initializer()
         {
-            produce = new Thread(ProduceLuggage);
-            sorter = new Thread(SortLuggage);
+            produce = new Thread(ProduceTicketAndLuggage);
+            sorter = new Thread(SortThroughDesk);
 
             produce.Start();
             sorter.Start();
@@ -50,9 +48,11 @@ namespace LuggageSorter
             Console.ReadLine();
         }
 
-        private void ProduceLuggage()
+        private void ProduceTicketAndLuggage()
         {
-            Random rand = new Random();            
+            Random rand = new Random();
+
+            int id = 1;
 
             while (true)
             {
@@ -96,7 +96,7 @@ namespace LuggageSorter
             }
         }
 
-        private void SortLuggage()
+        private void SortThroughDesk()
         {
             Sorter sortDesk1 = new Sorter(deskInfo.LuggageQueue, amsterdamQueue, barcelonaQueue, londonQueue);
             Sorter sortDesk2 = new Sorter(deskInfo.LuggageQueue, amsterdamQueue, barcelonaQueue, londonQueue);
@@ -122,6 +122,29 @@ namespace LuggageSorter
                     Debug.WriteLine("Queue was sent from disk3 to sorter");
                 }
                 Thread.Sleep(500);
+            }
+        }
+
+        private void SendThroughTerminal()
+        {
+            int id = 1;
+
+            // Needs further edits
+            Terminal amsterdamTerminal = new Terminal(1, true, DateTime.Now.ToLocalTime());
+            Terminal barcelonaTerminal = new Terminal(2, true, DateTime.Now.ToLocalTime());
+            Terminal londonTerminal = new Terminal(3, true, DateTime.Now.ToLocalTime());
+
+            while (true)
+            {
+                Airplane aAirplane = new Airplane(id, "Amsterdam", amsterdamQueue);
+                Airplane bAirplane = new Airplane(id, "Barcelona", barcelonaQueue);
+                Airplane lAirplane = new Airplane(id, "London", londonQueue);
+
+                if (true)
+                {
+
+                }
+                id++;
             }
         }
     }

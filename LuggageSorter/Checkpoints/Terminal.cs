@@ -11,12 +11,14 @@ namespace LuggageSorter
         public int Id { get; private set; }
         public bool Open { get; private set; }
         public DateTime Timestamp { get; private set; }
+        public Queue<Luggage> LuggageQueue { get; private set; }
 
         public Terminal(int id, bool open, DateTime timestamp)
         {
             Id = id;
             Open = open;
             Timestamp = timestamp;
+            LuggageQueue = new Queue<Luggage>();
         }
     }
 }

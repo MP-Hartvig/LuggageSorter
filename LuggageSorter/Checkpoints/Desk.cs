@@ -8,10 +8,10 @@ namespace LuggageSorter
 {
     class Desk
     {
-        public Queue<Luggage> LuggageQueue { get; private set; }
         public int Id { get; private set; }
-        public DateTime Timestamp { get; private set; }
         public bool Open { get; private set; }
+        public DateTime Timestamp { get; private set; }
+        public Queue<Luggage> LuggageQueue { get; private set; }
 
         public Desk(int id, bool open, DateTime timestamp)
         {
