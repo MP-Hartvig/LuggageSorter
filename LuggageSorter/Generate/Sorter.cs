@@ -15,20 +15,20 @@ namespace LuggageSorter
         Queue<Luggage> BarcelonaQueue;
         Queue<Luggage> LondonQueue;
 
-        public Sorter(Queue<Luggage> luggageQueue/*, Queue<Luggage> amsterdamQueue, 
-                      Queue<Luggage> barcelonaQueue, Queue<Luggage> londonQueue*/)
+        public Sorter(Queue<Luggage> luggageQueue, Queue<Luggage> amsterdamQueue, 
+                      Queue<Luggage> barcelonaQueue, Queue<Luggage> londonQueue)
         {
             LuggageQueue = luggageQueue;
-            //AmsterdamQueue = amsterdamQueue;
-            //BarcelonaQueue = barcelonaQueue;
-            //LondonQueue = londonQueue;
+            AmsterdamQueue = amsterdamQueue;
+            BarcelonaQueue = barcelonaQueue;
+            LondonQueue = londonQueue;
         }
 
         public void SortByDestination()
         {
             Luggage luggage = null;
 
-            while (LuggageQueue.Count < 0)
+            while (true)
             {
                 while (luggage == null)
                 {

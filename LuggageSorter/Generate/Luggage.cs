@@ -30,11 +30,12 @@ namespace LuggageSorter
                     try
                     {
                         luggageQueue.Enqueue(luggage);
+                        maxAmount++;
                         Debug.WriteLine("Added luggage to queue");
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine(ex);
+                        Debug.WriteLine(ex);
                     }
                     finally
                     {
@@ -42,9 +43,6 @@ namespace LuggageSorter
                         Monitor.Exit(luggageQueue);
                     }
                 }
-
-                maxAmount++;
-
                 Thread.Sleep(100);
             }
         }

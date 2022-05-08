@@ -16,12 +16,18 @@ namespace LuggageSorter
 
         int id = 0;
 
+        Thread produce;
+        Thread sorter;
+
+        Queue<Luggage> amsterdamQueue = new Queue<Luggage>();
+        Queue<Luggage> barcelonaQueue = new Queue<Luggage>();
+        Queue<Luggage> londonQueue = new Queue<Luggage>();
+
         Desk deskInfo = new Desk(1, true, DateTime.Now.ToLocalTime());
         Desk deskInfo2 = new Desk(2, true, DateTime.Now.ToLocalTime());
         Desk deskInfo3 = new Desk(3, true, DateTime.Now.ToLocalTime());
 
-        Thread produce;
-        Thread sorter;
+        
 
         public void Initializer()
         {
@@ -82,26 +88,30 @@ namespace LuggageSorter
 
         private void SortLuggage()
         {
+            Sorter sortDesk1 = new Sorter(deskInfo.LuggageQueue, amsterdamQueue, barcelonaQueue, londonQueue);
+            Sorter sortDesk2 = new Sorter(deskInfo.LuggageQueue, amsterdamQueue, barcelonaQueue, londonQueue);
+            Sorter sortDesk3 = new Sorter(deskInfo.LuggageQueue, amsterdamQueue, barcelonaQueue, londonQueue);            
+
             while (true)
             {
-                if (deskInfo.LuggageQueue.Count > 5 || 
-                    deskInfo2.LuggageQueue.Count > 5 || 
-                    deskInfo3.LuggageQueue.Count > 5) // Needs another condition
+                if (deskInfo.LuggageQueue.Count > 5)
                 {
-                    Sorter sortDesk1 = new Sorter(deskInfo.LuggageQueue);
                     sortDesk1.SortByDestination();
                     Debug.WriteLine("Queue was sent from disk1 to sorter");
+                }
 
-                    Sorter sortDesk2 = new Sorter(deskInfo2.LuggageQueue);
+                if (deskInfo2.LuggageQueue.Count > 5)
+                {
                     sortDesk2.SortByDestination();
                     Debug.WriteLine("Queue was sent from disk2 to sorter");
+                }
 
-                    Sorter sortDesk3 = new Sorter(deskInfo3.LuggageQueue);
+                if (deskInfo3.LuggageQueue.Count > 5)
+                {
                     sortDesk3.SortByDestination();
                     Debug.WriteLine("Queue was sent from disk3 to sorter");
-
-                    Thread.Sleep(200);
                 }
+                Thread.Sleep(500);
             }
         }
     }
